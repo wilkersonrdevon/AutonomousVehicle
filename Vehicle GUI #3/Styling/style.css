@@ -33,6 +33,9 @@ html {
   text-align: center;
   padding-left: 23%;
 }
+.rs {
+  padding-left: 9%;
+}
 
 .heading-right {
   font-size: 15px;
@@ -46,15 +49,6 @@ html {
    justify-content: center;
    padding-top: 6%;
 }
-
-.arrow {
-  width: 10%;
-  height: 10%;
-  float: left;
-  padding-top: 10%;
-  fill: red;
-}
-
 
 .square {
   float: left;
