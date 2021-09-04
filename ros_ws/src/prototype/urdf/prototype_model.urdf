@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<robot name = "vehicle">
+    <link name = "base_link">
+        <visual>
+            <geometry>
+                <box size = "1.193 0.775 0.838"/>
+            </geometry>
+            <material name = "plastic">
+                <color rgba = "0.2 0.2 0.2 1"/>
+            </material>
+        </visual>
+    </link>
+
+    <joint name = "front_left_wheel_joint" type = "fixed">
+        <axis xyz = "0 0 1"/>
+        <parent link = "base_link"/>
+        <child link = "front_left_wheel"/>
+        <origin rpy = "1.57 0 0" xyz = "0.5 0.4 -0.3"/>
+    </joint>
+
+    <link name = "front_left_wheel">
+        <visual>
+            <geometry>
+                <cylinder length="0.405" radius="0.2975"/>
+            </geometry>
+            <material name = "rubber">
+                <color rgba = "0.3 0.3 0.3 1"/>
+            </material>
+        </visual>
+    </link>
+
+    <joint name = "front_right_wheel_joint" type = "fixed">
+        <axis xyz = "0 0 1"/>
+        <parent link = "base_link"/>
+        <child link = "front_right_wheel"/>
+        <origin rpy = "1.57 0 0" xyz = "0.5 -0.4 -0.3"/>
+    </joint>
+
+    <link name = "front_right_wheel">
+        <visual>
+            <geometry>
+                <cylinder length="0.405" radius="0.2975"/>
+            </geometry>
+            <material name = "rubber">
+                <color rgba = "0.1 0.1 0.1 1"/>
+            </material>
+        </visual>
+    </link>
+
+    <joint name = "middle_back_caster_joint" type = "continuous">
+        <axis xyz = "-0.3 0 -0.45"/>
+        <parent link = "base_link"/>
+        <child link = "middle_back_caster"/>
+        <origin rpy = "0 0 0" xyz = "-0.3 0 -0.45"/>
+    </joint>
+
+    <link name = "middle_back_caster">
+        <visual>
+            <geometry>
+                <sphere radius = ".15"/>
+            </geometry>
+            <material name = "plastic"/>
+                <color rgba = "0.2 0.2 0.2 1"/>
+        </visual>
+    </link>
+
+
+
+        
+</robot>
