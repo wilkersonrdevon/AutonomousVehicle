@@ -3,7 +3,7 @@
     <link name = "base_link">
         <visual>
             <geometry>
-                <box size = "1.193 0.775 0.838"/>
+                <box size = ".135 0.09 0.05"/>
             </geometry>
             <material name = "plastic">
                 <color rgba = "0.2 0.2 0.2 1"/>
@@ -15,13 +15,13 @@
         <axis xyz = "0 0 1"/>
         <parent link = "base_link"/>
         <child link = "front_left_wheel"/>
-        <origin rpy = "1.57 0 0" xyz = "0.5 0.4 -0.3"/>
+        <origin rpy = "1.5708 0 0" xyz = "0.04 0.06 -0.01"/>
     </joint>
 
     <link name = "front_left_wheel">
         <visual>
             <geometry>
-                <cylinder length="0.405" radius="0.2975"/>
+                <cylinder length="0.025" radius="0.0342"/>
             </geometry>
             <material name = "rubber">
                 <color rgba = "0.3 0.3 0.3 1"/>
@@ -33,13 +33,13 @@
         <axis xyz = "0 0 1"/>
         <parent link = "base_link"/>
         <child link = "front_right_wheel"/>
-        <origin rpy = "1.57 0 0" xyz = "0.5 -0.4 -0.3"/>
+        <origin rpy = "1.5708 0 0" xyz = "0.04 -0.06 -0.01"/>
     </joint>
 
     <link name = "front_right_wheel">
         <visual>
             <geometry>
-                <cylinder length="0.405" radius="0.2975"/>
+                <cylinder length="0.025" radius="0.0342"/>
             </geometry>
             <material name = "rubber">
                 <color rgba = "0.1 0.1 0.1 1"/>
@@ -51,13 +51,13 @@
         <axis xyz = "-0.3 0 -0.45"/>
         <parent link = "base_link"/>
         <child link = "middle_back_caster"/>
-        <origin rpy = "0 0 0" xyz = "-0.3 0 -0.45"/>
+        <origin rpy = "0 0 0" xyz = "-0.04 0 -0.02"/>
     </joint>
 
     <link name = "middle_back_caster">
         <visual>
             <geometry>
-                <sphere radius = ".15"/>
+                <sphere radius = ".0254"/>
             </geometry>
             <material name = "plastic"/>
                 <color rgba = "0.2 0.2 0.2 1"/>
