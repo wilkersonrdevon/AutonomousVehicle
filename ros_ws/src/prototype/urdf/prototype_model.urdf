@@ -4,11 +4,11 @@
     <gazebo>
         <plugin name = "differential_drive_controller"
                 filename = "libgazebo_ros_diff_drive.so">
-            <leftJoint>front_left_wheel</leftJoint>
-            <rightJoint>front_right_wheel</rightJoint>
+            <leftJoint>front_left_wheel_joint</leftJoint>
+            <rightJoint>front_right_wheel_joint</rightJoint>
             <robotBaseFrame>base_link</robotBaseFrame>
             <wheelSeparation>0.09</wheelSeparation>
-            <wheelDiameter>0.0342*2</wheelDiameter>
+            <wheelDiameter>0.0984</wheelDiameter>
             <publishWheelJointState>true</publishWheelJointState>
         </plugin>
     </gazebo>
@@ -83,8 +83,8 @@
         </inertial>
     </link>
 
-    <joint name = "front_left_wheel_joint" type = "fixed">
-        <axis xyz = "0 0 0"/>
+    <joint name = "front_left_wheel_joint" type = "continuous">
+        <axis xyz = "0 0 -1"/>
         <parent link = "front_left_axle"/>
         <child link = "front_left_wheel"/>
         <origin rpy = "0 0 0" xyz = "0 0 -0.015"/>
@@ -139,8 +139,8 @@
         </inertial>
     </link>
 
-    <joint name = "front_right_wheel_joint" type = "fixed">
-        <axis xyz = "0 0 0"/>
+    <joint name = "front_right_wheel_joint" type = "continuous">
+        <axis xyz = "0 0 1"/>
         <parent link = "front_right_axle"/>
         <child link = "front_right_wheel"/>
         <origin rpy = "0 0 0" xyz = "0 0 -0.015"/>
@@ -194,8 +194,8 @@
         </inertial>
     </link>
 
-    <joint name = "middle_back_caster_wheel_joint" type = "fixed">
-        <axis xyz = "0 0 0"/>
+    <joint name = "middle_back_caster_wheel_joint" type = "continuous">
+        <axis xyz = "0 0 -1"/>
         <parent link = "middle_back_caster"/>
         <child link = "middle_back_caster_wheel"/>
         <origin rpy = "1.5708 0 0" xyz = "0 0.005 -0.004"/>
