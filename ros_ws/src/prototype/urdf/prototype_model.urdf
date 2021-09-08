@@ -10,6 +10,16 @@
                 <color rgba = "0.2 0.2 0.2 1"/>
             </material>
         </visual>
+        <collision>
+            <geometry>
+                <box size = ".135 0.09 0.05"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value = "1.0"/>
+            <inertia ixx = "0.015" iyy = "0.0375" izz = "0.000167"
+                     ixy = "0"     ixz = "0"      iyz = "0"/>
+        </inertial>
     </link>
     <!-- LEFT WHEEL -->
     <link name = "front_left_axle">
@@ -39,6 +49,11 @@
                 <color rgba = "0.3 0.3 0.3 1"/>
             </material>
         </visual>
+        <inertial>
+            <mass value = "0.1"/>
+            <inertia ixx = "5.1458e-5" iyy = "5.1458e-5" izz = "6.125e-5"
+                     ixy = "0"         ixz = "0"         iyz = "0"/>
+        </inertial>
     </link>
 
     <joint name = "front_left_wheel_joint" type = "continuous">
@@ -75,6 +90,11 @@
                 <color rgba = "0.3 0.3 0.3 1"/>
             </material>
         </visual>
+        <inertial>
+            <mass value = "0.1"/>
+            <inertia ixx = "5.1458e-5" iyy = "5.1458e-5" izz = "6.125e-5"
+                     ixy = "0"         ixz = "0"         iyz = "0"/>
+        </inertial>
     </link>
 
     <joint name = "front_right_wheel_joint" type = "continuous">
@@ -84,21 +104,26 @@
         <origin rpy = "0 0 0" xyz = "0 0 0.01"/>
     </joint>
     <!-- BACK CASTER -->
-    <joint name = "middle_back_caster_joint" type = "continuous">
-        <axis xyz = "-0.3 0 -0.45"/>
-        <parent link = "base_link"/>
-        <child link = "middle_back_caster"/>
-        <origin rpy = "0 0 0" xyz = "-0.04 0 -0.02"/>
-    </joint>
-
     <link name = "middle_back_caster">
         <visual>
             <geometry>
-                <sphere radius = ".0254"/>
+                <sphere radius = "0.0127"/>
             </geometry>
             <material name = "plastic"/>
                 <color rgba = "0.2 0.2 0.2 1"/>
         </visual>
+        <inertial>
+            <mass value = "0.01"/>
+            <inertia ixx = "5.1458e-5" iyy = "5.1458e-5" izz = "6.125e-5"
+                     ixy = "0"         ixz = "0"         iyz = "0"/>
+        </inertial>
     </link>
+    
+    <joint name = "middle_back_caster_joint" type = "continuous">
+        <axis xyz = "-0.3 0 -0.45"/>
+        <parent link = "base_link"/>
+        <child link = "middle_back_caster"/>
+        <origin rpy = "0 0 0" xyz = "-0.04 0 -0.033"/>
+    </joint>
 
 </robot>
