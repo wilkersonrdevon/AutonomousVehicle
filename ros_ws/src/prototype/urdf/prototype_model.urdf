@@ -1,5 +1,17 @@
 <?xml version="1.0"?>
 <robot name = "vehicle">
+    <!-- GAZEBO DIFFERENTIAL DRIVE -->
+    <gazebo>
+        <plugin name = "differential_drive_controller"
+                filename = "libgazebo_ros_diff_drive.so">
+            <leftJoint>front_left_wheel</leftJoint>
+            <rightJoint>front_right_wheel</rightJoint>
+            <robotBaseFrame>base_link</robotBaseFrame>
+            <wheelSeparation>0.09</wheelSeparation>
+            <wheelDiameter>0.0342*2</wheelDiameter>
+            <publishWheelJointState>true</publishWheelJointState>
+        </plugin>
+    </gazebo>
     <!-- CHASSIS -->
     <link name = "base_link">
         <visual>
