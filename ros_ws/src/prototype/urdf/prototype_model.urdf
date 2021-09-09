@@ -12,6 +12,7 @@
             <publishWheelJointState>true</publishWheelJointState>
         </plugin>
     </gazebo>
+
     <!-- CHASSIS -->
     <link name = "base_link">
         <visual>
@@ -28,11 +29,12 @@
             </geometry>
         </collision>
         <inertial>
-            <mass value = "1.0"/>
+            <mass value = "3.0"/>
             <inertia ixx = "0.015" iyy = "0.0375" izz = "0.000167"
                      ixy = "0"     ixz = "0"      iyz = "0"/>
         </inertial>
     </link>
+
     <!-- LEFT WHEEL -->
     <link name = "front_left_axle">
         <visual>
@@ -59,7 +61,7 @@
         <axis xyz = "0 0 0"/>
         <parent link = "base_link"/>
         <child link = "front_left_axle"/>
-        <origin rpy = "1.5708 0 0" xyz = "0.04 0.046 -0.01"/>
+        <origin rpy = "1.5707963268 0 0" xyz = "0.04 0.046 -0.01"/>
     </joint>
 
     <link name = "front_left_wheel">
@@ -89,6 +91,7 @@
         <child link = "front_left_wheel"/>
         <origin rpy = "0 0 0" xyz = "0 0 -0.015"/>
     </joint>
+
     <!-- RIGHT WHEEL -->
     <link name = "front_right_axle">
         <visual>
@@ -115,7 +118,7 @@
         <axis xyz = "0 0 0"/>
         <parent link = "base_link"/>
         <child link = "front_right_axle"/>
-        <origin rpy = "-1.5708 0 0" xyz = "0.04 -0.046 -0.01"/>
+        <origin rpy = "-1.5707963268 0 0" xyz = "0.04 -0.046 -0.01"/>
     </joint>
 
     <link name = "front_right_wheel">
@@ -145,38 +148,39 @@
         <child link = "front_right_wheel"/>
         <origin rpy = "0 0 0" xyz = "0 0 -0.015"/>
     </joint>
+
     <!-- BACK CASTER -->
     <link name = "middle_back_caster">
         <visual>
             <geometry>
-                <box size = "0.005 0.005 0.007"/>
+                <box size = "0.005 0.005 0.05"/>
             </geometry>
             <material name = "plastic"/>
                 <color rgba = "0.9 0.9 0.9 1"/>
         </visual>
         <collision>
             <geometry>
-                <box size = "0.01 0.01 0.01"/>
+                <box size = "0.005 0.005 0.05"/>
             </geometry>
         </collision>
         <inertial>
-            <mass value = "0.01"/>
-            <inertia ixx = "5.1458e-5" iyy = "5.1458e-5" izz = "6.125e-5"
+            <mass value = "0.1"/>
+            <inertia ixx = "0.00083" iyy = "0.00083" izz = "0.000167"
                      ixy = "0"         ixz = "0"         iyz = "0"/>
         </inertial>
     </link>
 
     <joint name = "middle_back_caster_joint" type = "fixed">
-        <axis xyz = "0 0 0"/>
+        <axis xyz = "0 0 1"/>
         <parent link = "base_link"/>
         <child link = "middle_back_caster"/>
-        <origin rpy = "0 0 0" xyz = "-0.04 -0.005 -0.03"/>
+        <origin rpy = "0 0 0" xyz = "-0.05 -0.005 0"/>
     </joint>
 
     <link name = "middle_back_caster_wheel">
         <visual>
             <geometry>
-                <cylinder length="0.002" radius="0.009"/>
+                <sphere radius="0.0125"/>
             </geometry>
             <material name = "plastic">
                 <color rgba = "0.9 0.9 0.9 1"/>
@@ -184,21 +188,32 @@
         </visual>
         <collision>
             <geometry>
-                <cylinder length="0.002" radius="0.009"/>
+                <sphere radius="0.0125"/>
             </geometry>
+            <surface>
+                <friction>
+					<ode>
+						<mu>0.0</mu>
+						<mu2>0.0</mu2>
+						<fdir1> 0 0 0</fdir1>
+						<slip1>1.0</slip1>
+						<slip2>1.0</slip2>
+					</ode>
+				</friction>
+            </surface>
         </collision>
         <inertial>
-            <mass value = "0.01"/>
-            <inertia ixx = "5.1458e-5" iyy = "5.1458e-5" izz = "6.125e-5"
+            <mass value = "0.1"/>
+            <inertia ixx = "1e-6" iyy = "1e-6" izz = "1e-6"
                      ixy = "0"         ixz = "0"         iyz = "0"/>
         </inertial>
     </link>
 
-    <joint name = "middle_back_caster_wheel_joint" type = "continuous">
-        <axis xyz = "0 0 -1"/>
+    <joint name = "middle_back_caster_wheel_joint" type = "fixed">
+        <axis xyz = "0 0 1"/>
         <parent link = "middle_back_caster"/>
         <child link = "middle_back_caster_wheel"/>
-        <origin rpy = "1.5708 0 0" xyz = "0 0.005 -0.004"/>
+        <origin rpy = "-1.5707963268 0 0" xyz = "0 0 -0.036"/>
     </joint>
 
 </robot>
