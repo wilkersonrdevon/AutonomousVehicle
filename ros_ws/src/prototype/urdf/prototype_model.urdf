@@ -170,8 +170,9 @@
         </inertial>
     </link>
 
-    <joint name = "middle_back_caster_joint" type = "fixed">
+    <joint name = "middle_back_caster_joint" type = "revolute">
         <axis xyz = "0 0 1"/>
+        <limit effort="1000.0" lower="-1.5707963268" upper="1.5707963268" velocity="0.5"/>
         <parent link = "base_link"/>
         <child link = "middle_back_caster"/>
         <origin rpy = "0 0 0" xyz = "-0.05 -0.005 0"/>
@@ -209,7 +210,7 @@
         </inertial>
     </link>
 
-    <joint name = "middle_back_caster_wheel_joint" type = "fixed">
+    <joint name = "middle_back_caster_wheel_joint" type = "continuous">
         <axis xyz = "0 0 1"/>
         <parent link = "middle_back_caster"/>
         <child link = "middle_back_caster_wheel"/>
