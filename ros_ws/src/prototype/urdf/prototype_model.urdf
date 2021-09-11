@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot name = "vehicle">
-    <!-- GAZEBO DIFFERENTIAL DRIVE -->
+    <!-- GAZEBO PLUGINS -->
     <gazebo>
         <plugin name = "differential_drive_controller"
                 filename = "libgazebo_ros_diff_drive.so">
@@ -10,6 +10,10 @@
             <wheelSeparation>0.09</wheelSeparation>
             <wheelDiameter>0.0984</wheelDiameter>
             <publishWheelJointState>true</publishWheelJointState>
+        </plugin>
+        <plugin name = "joint_state_publisher"
+                filename = "libgazebo_ros_joint_state_publisher.so">
+            <jointName>middle_back_caster_joint, middle_back_caster_wheel_joint</jointName>
         </plugin>
     </gazebo>
 
@@ -214,7 +218,142 @@
         <axis xyz = "0 0 1"/>
         <parent link = "middle_back_caster"/>
         <child link = "middle_back_caster_wheel"/>
-        <origin rpy = "-1.5707963268 0 0" xyz = "0 0 -0.036"/>
+        <origin rpy = "-1.5707963268 0 0" xyz = "0 0 -0.03"/>
     </joint>
 
+    <!-- CAMERA -->
+    <link name = "front_camera_link">
+        <visual>
+            <geometry>
+                <box size = "0.025 0.025 0.02"/>
+            </geometry>
+            <material name = "plastic">
+                <color rgba = "0.9 0.9 0.9 1"/>
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <box size = "0.025 0.025 0.02"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value = "1e-5"/>
+            <inertia ixx = "1e-6" iyy = "1e-6" izz = "1e-6"
+                     ixy = "0"         ixz = "0"         iyz = "0"/>
+        </inertial>
+    </link>
+
+    <joint name = "front_camera_joint" type = "fixed">
+        <axis xyz = "0 1 0" />
+        <origin xyz = "0.0675 0 0.03" rpy = "0 0 0" />
+        <parent link = "base_link" />
+        <child link = "front_camera_link" />
+    </joint>
+
+    <gazebo reference = "front_camera_link">
+        <sensor type="camera" name="camera0">
+            <update_rate>10.0</update_rate>
+            <camera name="head">
+                <horizontal_fov>2.7070057</horizontal_fov>
+                <image>
+                <width>3280</width>
+                <height>2464</height>
+                <format>R8G8B8</format>
+                </image>
+                <clip>
+                <near>0.02</near>
+                <far>300</far>
+                </clip>
+                <noise>
+                <type>gaussian</type>
+                <!-- Noise is sampled independently per pixel on each frame.
+                    That pixel's noise value is added to each of its color
+                    channels, which at that point lie in the range [0,1]. -->
+                <mean>0.0</mean>
+                <stddev>0.007</stddev>
+                </noise>
+            </camera>
+            <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+                <alwaysOn>true</alwaysOn>
+                <updateRate>0.0</updateRate>
+                <cameraName>prototype_vehicle/camera0</cameraName>
+                <imageTopicName>image_raw</imageTopicName>
+                <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+                <frameName>front_camera_link</frameName>
+                <hackBaseline>0.07</hackBaseline>
+                <distortionK1>0.0</distortionK1>
+                <distortionK2>0.0</distortionK2>
+                <distortionK3>0.0</distortionK3>
+                <distortionT1>0.0</distortionT1>
+                <distortionT2>0.0</distortionT2>
+            </plugin>
+        </sensor>
+    </gazebo>
+
+    <!-- ULTRASONIC SENSOR -->
+    <link name = "ultrasonic_sensor_link">
+        <visual>
+            <geometry>
+                <box size = "0.025 0.05 0.02"/>
+            </geometry>
+            <material name = "plastic">
+                <color rgba = "0.9 0.9 0.9 1"/>
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <box size = "0.025 0.05 0.02"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value = "1e-5"/>
+            <inertia ixx = "1e-6" iyy = "1e-6" izz = "1e-6"
+                     ixy = "0"         ixz = "0"         iyz = "0"/>
+        </inertial>
+    </link>
+
+    <joint name = "ultra_sonic_sensor_joint" type = "fixed">
+        <axis xyz = "0 0 0" />
+        <origin xyz = "0.0675 0 0" rpy = "0 0 0" />
+        <parent link = "base_link" />
+        <child link = "ultrasonic_sensor_link" />
+    </joint>
+
+    <gazebo reference="ultrasonic_sensor_link">        
+        <sensor type="ray" name="ultrasonic0">
+            <pose>0 0 0 0 0 0</pose>
+            <visualize>true</visualize>
+            <update_rate>10</update_rate>
+            <ray>
+                <scan>
+                    <horizontal>
+                    <samples>40</samples>
+                    <resolution>1</resolution> 
+                    <min_angle>-0.261799</min_angle>
+                    <max_angle>0.261799</max_angle>
+                    </horizontal>
+                    <vertical>
+                    <samples>10</samples>
+                    <resolution>1</resolution> 
+                    <min_angle>-0.0349066</min_angle>
+                    <max_angle>0.0349066</max_angle> 
+                    </vertical>
+                </scan>
+                <range>
+                    <min>0.02</min>
+                    <max>4</max>
+                    <resolution>0.02</resolution>
+                </range>
+            </ray>
+            <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+                <gaussianNoise>0.005</gaussianNoise>
+                <alwaysOn>true</alwaysOn>
+                <updateRate>50</updateRate>
+                <topicName>sensor/ir_front</topicName>
+                <frameName>ultrasonic_sensor_link</frameName>
+                <radiation>INFRARED</radiation>
+                <fov>0.2967</fov>
+            </plugin>
+        </sensor>  
+   </gazebo>
 </robot>
