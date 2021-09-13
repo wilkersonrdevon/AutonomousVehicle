@@ -2,7 +2,7 @@
 import rospy
 import time
 
-import adafruit_ssd1306
+import Adafruit_SSD1306
 
 from PIL import Image
 from PIL import ImageDraw
@@ -37,7 +37,7 @@ def on_user_text(msg):
 if __name__ == '__main__':
 
 	# 128x32 display with hardware I2C:
-	disp = adafruit_ssd1306.SSD1306_128_32(rst=None, i2c_bus=1, gpio=1) # setting gpio to 1 is hack to avoid platform detection
+	disp = Adafruit_SSD1306.SSD1306_128_32(rst=None, i2c_bus=1, gpio=1) # setting gpio to 1 is hack to avoid platform detection
 
 	# Initialize library.
 	disp.begin()

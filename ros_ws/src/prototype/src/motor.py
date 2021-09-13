@@ -1,41 +1,35 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import rospy
 import time
 
 from adafruit_motorkit import MotorKit
 from std_msgs.msg import String
 
-
-
-
 # sets motor speed between [-1.0, 1.0]
 def set_speed(motor_ID, value):
 	max_pwm = 115.0
-	speed = int(min(max(abs(value * max_pwm), 0), max_pwm))
-
-	if motor_ID == 1:
+	speed = value
+	print(motor_ID)
+	if motor_ID == motor_left:
 		motor = motor_left
-	elif motor_ID == 2:
+	elif motor_ID == motor_right:
 		motor = motor_right
-	else:
-		rospy.logerror('set_speed(%d, %f) -> invalid motor_ID=%d', motor_ID, value, motor_ID)
-		return
+	# else:
+	# 	rospy.logerror('set_speed(%d, %f) -> invalid motor_ID=%d', motor_ID, value, motor_ID)
+	# 	return
 	
-	motor.setSpeed(speed)
+	motor.throttle = speed
 
-	if value > 0:
-		motor.run(MotorKit.FORWARD)
-	else:
-		motor.run(MotorKit.BACKWARD)
+	# if value > 0:
+	# 	motor.run(MotorKit.FORWARD)
+	# else:
+	# 	motor.run(MotorKit.BACKWARD)
 
 
 # stops all motors
 def all_stop():
-	motor_left.setSpeed(0)
-	motor_right.setSpeed(0)
-
-	motor_left.run(MotorKit.RELEASE)
-	motor_right.run(MotorKit.RELEASE)
+	motor_left.throttle = 0
+	motor_right.throttle = 0
 
 
 # directional commands (degree, speed)
@@ -51,34 +45,31 @@ def on_cmd_str(msg):
 	rospy.loginfo(rospy.get_caller_id() + ' cmd_str=%s', msg.data)
 
 	if msg.data.lower() == "left":
-		set_speed(motor_left_ID,  -1.0)
-		set_speed(motor_right_ID,  1.0) 
+		set_speed(motor_left,  -1.0)
+		set_speed(motor_right,  1.0) 
 	elif msg.data.lower() == "right":
-		set_speed(motor_left_ID,   1.0)
-		set_speed(motor_right_ID, -1.0) 
+		set_speed(motor_left,   1.0)
+		set_speed(motor_right, -1.0) 
 	elif msg.data.lower() == "forward":
-		set_speed(motor_left_ID,   1.0)
-		set_speed(motor_right_ID,  1.0)
+		set_speed(motor_left,   1.0)
+		set_speed(motor_right,  1.0)
 	elif msg.data.lower() == "backward":
-		set_speed(motor_left_ID,  -1.0)
-		set_speed(motor_right_ID, -1.0)  
+		set_speed(motor_left,  -1.0)
+		set_speed(motor_right, -1.0)  
 	elif msg.data.lower() == "stop":
 		all_stop()
-	else:
-		rospy.logerror(rospy.get_caller_id() + ' invalid cmd_str=%s', msg.data)
+	# else:
+	# 	rospy.logerror(rospy.get_caller_id() + ' invalid cmd_str=%s', msg.data)
 
 
 # initialization
 if __name__ == '__main__':
 
 	# setup motor controller
-	motor_driver = MotorKit(i2c_bus=1)
+	motor = MotorKit()
 
-	motor_left_ID = 1
-	motor_right_ID = 2
-
-	motor_left = motor_driver.getMotor(motor_left_ID)
-	motor_right = motor_driver.getMotor(motor_right_ID)
+	motor_left = motor.motor1
+	motor_right = motor.motor2
 
 	# stop the motors as precaution
 	all_stop()
