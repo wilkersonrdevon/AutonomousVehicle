@@ -26,7 +26,7 @@ def all_stop():
 def callback(msg):
     if msg.linear.x != 0:
         set_speed(motor_left, msg.linear.x)
-        set_speed(motor_right, msg.linear.x)
+        set_speed(motor_right, msg.linear.x * 0.85)
     elif msg.angular.z != 0 :
         set_speed(motor_left, -msg.angular.z)
         set_speed(motor_right, msg.angular.z)
