@@ -11,11 +11,22 @@ import busio
 
 import adafruit_gps
 
+# Create a serial connection for the GPS connection using default speed and
+# a slightly higher timeout (GPS modules typically update once a second).
+# These are the defaults you should use for the GPS FeatherWing.
+# For other boards set RX = GPS module TX, and TX = GPS module RX pins.
+# uart = busio.UART(board.TX, board.RX, baudrate=9600, timeout=10)
+
+# for a computer, use the pyserial library for uart access
 import serial
-# USB0 or THS1 depending on connection method
 uart = serial.Serial(port ="/dev/ttyTHS1", baudrate=9600, bytesize = serial.EIGHTBITS, parity = serial.PARITY_NONE, stopbits = serial.STOPBITS_ONE, timeout=10)
 
-gps = adafruit_gps.GPS(uart)  
+# If using I2C, we'll create an I2C interface to talk to using default pins
+# i2c = board.I2C()
+
+# Create a GPS module instance.
+gps = adafruit_gps.GPS(uart)  # Use UART/pyserial
+# gps = adafruit_gps.GPS_GtopI2C(i2c)  # Use I2C interface
 
 # Initialize the GPS module by changing what data it sends and at what rate.
 # These are NMEA extensions for PMTK_314_SET_NMEA_OUTPUT and
@@ -41,6 +52,7 @@ gps.send_command(b"PMTK220,1000")
 # data during parsing.  This would be twice a second (2hz, 500ms delay):
 # gps.send_command(b'PMTK220,500')
 
+# Main loop runs forever printing data as it comes in
 timestamp = time.monotonic()
 while True:
     data = gps.read(32)  # read up to 32 bytes

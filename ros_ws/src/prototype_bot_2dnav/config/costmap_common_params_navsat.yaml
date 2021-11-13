@@ -1,0 +1,10 @@
+max_obstacle_height: 0.7
+obstacle_range: 6
+raytrace_range: 6
+footprint: [[0.498475, 0.3302], 0.498475, -0.3302], [-0.498475, 0.3302], [-0.498475, -0.3302]]
+#robot_radius: ir_of_robot
+inflation_radius: 0.3
+
+observation_sources: point_cloud_sensor
+
+point_cloud_sensor: {sensor_frame: camera_link, data_type: PointCloud2, topic: camera/depth/points, marking: true, clearing: true}

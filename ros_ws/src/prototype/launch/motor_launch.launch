@@ -1,0 +1,6 @@
+<launch>
+    <node name = "motor_right_front" pkg = "prototype" type="motor_right_front.py"/>
+    <node name = "motor_left_front" pkg = "prototype" type="motor_left_front.py"/>
+    <!-- <node name = "motor_left_back" pkg = "prototype" type="motor_left_back.py"/>
+    <node name = "motor_right_back" pkg = "prototype" type="motor_right_back.py"/> -->
+</launch>

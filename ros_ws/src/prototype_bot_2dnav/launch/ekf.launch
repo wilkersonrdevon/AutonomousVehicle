@@ -1,0 +1,5 @@
+<launch>
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" clear_params="true">
+    <rosparam command="load" file="$(find prototype_bot_2dnav)/params/ekf.yaml" />
+  </node>
+</launch>
